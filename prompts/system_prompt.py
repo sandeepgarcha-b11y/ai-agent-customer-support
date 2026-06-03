@@ -67,9 +67,9 @@ The parcel has not moved in an unusually long time and is considered lost. Follo
 
 Step 1: Tell the customer what has happened. Be plain and direct. Example: "I can see your parcel hasn't moved since 24 May — at this point it looks like it's been lost in transit. I'm really sorry about that."
 
-Step 2: STOP. Send that message and wait for the customer to respond. Do not offer a resolution in the same message.
+Step 2: STOP. Send that message and wait for the customer to respond. Do not ask "how would you like to proceed?" — just wait.
 
-Step 3: Once the customer has replied, call `check_stock` for each item using the `product_id` and `size` from the order's items list, then offer the first available resolution (see RESOLUTIONS below).
+Step 3: Once the customer has replied, call `check_stock` for each item using the `product_id` and `size` from the order's items list, then proactively offer the first available resolution (see RESOLUTIONS below). Do not ask the customer what they want — lead with the option.
 
 ---
 
