@@ -17,7 +17,7 @@ def lookup_order(order_id: str) -> dict:
             "placed_at": "2026-06-01",
             "estimated_dispatch": "2026-06-04",
             "estimated_delivery": "2026-06-06",
-            "items": ["Merino Crew Neck Jumper (Forest Green, M)"],
+            "items": [{"name": "Merino Crew Neck Jumper (Forest Green, M)", "product_id": "PROD-MERINO-JUMPER", "size": "M"}],
             "sla_breached": False,
         },
         # Untracked — placed 5 days ago, outside the 3-day SLA
@@ -30,7 +30,7 @@ def lookup_order(order_id: str) -> dict:
             "placed_at": "2026-05-29",
             "estimated_dispatch": "2026-06-01",
             "estimated_delivery": "2026-06-03",
-            "items": ["Linen Wide-Leg Trousers (Sand, 12)"],
+            "items": [{"name": "Linen Wide-Leg Trousers (Sand, 12)", "product_id": "PROD-LINEN-TROUSERS", "size": "12"}],
             "sla_breached": True,
         },
         # Tracked — within the 1-2 day delivery window, on its way
@@ -44,7 +44,7 @@ def lookup_order(order_id: str) -> dict:
             "estimated_delivery": "2026-06-04",
             "last_update": "Out for delivery — DPD depot, Bristol",
             "last_update_at": "2026-06-03T07:14:00",
-            "items": ["Recycled Fleece Jacket (Slate, L)"],
+            "items": [{"name": "Recycled Fleece Jacket (Slate, L)", "product_id": "PROD-FLEECE-JACKET", "size": "L"}],
             "sla_breached": False,
         },
         # Tracked — outside window, not yet delivered, last known coordinates
@@ -59,7 +59,7 @@ def lookup_order(order_id: str) -> dict:
             "last_update": "Parcel held at DPD Swindon depot — collection card left",
             "last_update_at": "2026-05-30T09:41:00",
             "last_known_location": "DPD Parcelshop, 14 Commercial Road, Swindon, SN1 5NF",
-            "items": ["Canvas Overshirt (Rust, S)"],
+            "items": [{"name": "Canvas Overshirt (Rust, S)", "product_id": "PROD-CANVAS-OVERSHIRT", "size": "S"}],
             "sla_breached": True,
         },
         # Tracked — marked delivered, with delivery coordinates (left safe)
@@ -74,7 +74,10 @@ def lookup_order(order_id: str) -> dict:
             "delivered_at": "2026-05-28T13:22:00",
             "delivery_note": "Left in rear alleyway, beside the blue gate",
             "last_known_location": "Rear of 42 Ashford Street, Bristol, BS3 1QH",
-            "items": ["Organic Cotton Tee (White, M)", "Merino Beanie (Charcoal)"],
+            "items": [
+                {"name": "Organic Cotton Tee (White, M)", "product_id": "PROD-ORGANIC-TEE", "size": "M"},
+                {"name": "Merino Beanie (Charcoal)", "product_id": "PROD-MERINO-BEANIE", "size": "ONE SIZE"},
+            ],
             "sla_breached": False,
         },
         # Tracked — genuinely lost, no movement in 9 days
@@ -89,7 +92,7 @@ def lookup_order(order_id: str) -> dict:
             "last_update": "Parcel received at Evri national hub",
             "last_update_at": "2026-05-24T18:05:00",
             "last_known_location": None,
-            "items": ["Waxed Cotton Jacket (Navy, XL)"],
+            "items": [{"name": "Waxed Cotton Jacket (Navy, XL)", "product_id": "PROD-WAXED-JACKET", "size": "XL"}],
             "sla_breached": True,
         },
         # Multi-order customer — most recent order (for order selection testing)
@@ -103,7 +106,7 @@ def lookup_order(order_id: str) -> dict:
             "estimated_delivery": "2026-06-05",
             "last_update": "In transit to local DPD depot",
             "last_update_at": "2026-06-03T06:30:00",
-            "items": ["Corduroy Shirt (Teal, L)"],
+            "items": [{"name": "Corduroy Shirt (Teal, L)", "product_id": "PROD-CORDUROY-SHIRT", "size": "L"}],
             "sla_breached": False,
         },
         # Multi-order customer — second recent order
@@ -117,7 +120,10 @@ def lookup_order(order_id: str) -> dict:
             "estimated_delivery": "2026-05-25",
             "delivered_at": "2026-05-25T11:04:00",
             "delivery_note": "Delivered to front door",
-            "items": ["Ripstop Shorts (Khaki, M)", "Organic Cotton Tee (Rust, M)"],
+            "items": [
+                {"name": "Ripstop Shorts (Khaki, M)", "product_id": "PROD-CANVAS-SHORTS", "size": "M"},
+                {"name": "Organic Cotton Tee (Rust, M)", "product_id": "PROD-ORGANIC-TEE", "size": "M"},
+            ],
             "sla_breached": False,
         },
         # Multi-order customer — third recent order
@@ -131,7 +137,7 @@ def lookup_order(order_id: str) -> dict:
             "estimated_delivery": "2026-05-13",
             "delivered_at": "2026-05-13T09:55:00",
             "delivery_note": "Signed for by occupant",
-            "items": ["Merino Crew Neck Jumper (Slate, S)"],
+            "items": [{"name": "Merino Crew Neck Jumper (Slate, S)", "product_id": "PROD-MERINO-JUMPER", "size": "S"}],
             "sla_breached": False,
         },
     }
