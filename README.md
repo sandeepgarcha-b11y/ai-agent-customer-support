@@ -4,13 +4,13 @@ A customer support AI agent for [Passenger](https://www.passenger-clothing.com/)
 
 ## Supported flows
 
-| Flow | Description |
-|------|-------------|
-| **WISMO** | Order tracking — status, carrier, estimated delivery |
-| **Returns** | Eligibility check and return initiation |
-| **Exchanges** | Swap for a different size or product |
-| **Damaged orders** | Triage and escalation |
-| **Account access** | Account lookup and flag identification |
+| Flow | Status |
+|------|--------|
+| **WISMO** (order tracking) | Complete |
+| **Returns** | Placeholder |
+| **Exchanges** | Placeholder |
+| **Damaged orders** | Placeholder |
+| **Account access** | Placeholder |
 
 ## Project structure
 
@@ -22,9 +22,10 @@ cs-ai-agent/
 │   ├── product_tools.py  # check_stock
 │   └── account_tools.py  # lookup_account
 ├── prompts/
-│   └── system_prompt.py  # Placeholder — system prompt written separately
+│   └── system_prompt.py  # WISMO system prompt (other flows TBD)
 ├── traces/               # LangSmith trace exports (gitignored)
 ├── case_study/           # Iteration logs and docs (gitignored)
+├── CLAUDE.md             # Guidance for Claude Code
 ├── requirements.txt
 └── .env.example
 ```
@@ -52,19 +53,21 @@ python agent.py
 | `LANGCHAIN_API_KEY` | No | LangSmith API key |
 | `LANGCHAIN_PROJECT` | No | LangSmith project name (default: `passenger-support-agent`) |
 
-## Mock data
+## Test personas (WISMO)
 
-All tools return hardcoded but realistic fake data. Sample identifiers for testing:
+All tools use hardcoded mock data. Use these email addresses to drive each scenario:
 
-**Orders:** `PAS-10042` (in transit), `PAS-10038` (delivered), `PAS-10055` (processing)
+| Email | Scenario |
+|-------|----------|
+| `clara.jones@example.com` | Untracked, within SLA |
+| `tom.wright@example.com` | Untracked, outside SLA |
+| `priya.mehta@example.com` | Tracked, within delivery window |
+| `ben.hayes@example.com` | Tracked, overdue, at depot |
+| `sarah.okafor@example.com` | Delivered, customer says not received |
+| `james.liu@example.com` | Genuinely lost |
+| `nina.patel@example.com` | Multiple recent orders |
 
-**Products:** `PROD-MERINO-JUMPER`, `PROD-LINEN-SHIRT`, `PROD-CANVAS-SHORTS`, `PROD-FLEECE-JACKET`
-
-**Accounts:** `jane.doe@example.com` (active), `locked.user@example.com` (locked), `flagged.user@example.com` (fraud flag)
-
-## Escalation
-
-The agent is designed to recognise when a query is beyond its scope and escalate gracefully to a human agent. Escalation logic is handled via the system prompt (to be added separately).
+**Products (for exchange/stock checks):** `PROD-MERINO-JUMPER`, `PROD-LINEN-SHIRT`, `PROD-CANVAS-SHORTS`, `PROD-FLEECE-JACKET`
 
 ## LangSmith tracing
 
