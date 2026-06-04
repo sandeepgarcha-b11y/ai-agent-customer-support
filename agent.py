@@ -1,30 +1,20 @@
-"""Passenger support agent — LangGraph ReAct implementation."""
+"""Passenger support agent — CLI entrypoint."""
 
 import os
-from langchain_openai import ChatOpenAI
-from langchain_core.messages import SystemMessage
-from langgraph.prebuilt import create_react_agent
+import uuid
+from langchain_core.messages import HumanMessage, AIMessage
 
-from tools import ALL_TOOLS
-from prompts import SYSTEM_PROMPT
-
-
-def build_agent():
-    llm = ChatOpenAI(model="gpt-4o", temperature=0)
-    agent = create_react_agent(
-        model=llm,
-        tools=ALL_TOOLS,
-        prompt=SystemMessage(content=SYSTEM_PROMPT),
-    )
-    return agent
+from graph import build_graph
 
 
 def run_conversation():
-    agent = build_agent()
+    graph = build_graph()
+    thread_id = str(uuid.uuid4())
+    config = {"configurable": {"thread_id": thread_id}}
+
     print("Passenger Support Agent")
     print("Type 'quit' or 'exit' to end the conversation.\n")
 
-    history = []
     while True:
         try:
             user_input = input("Customer: ").strip()
@@ -33,29 +23,27 @@ def run_conversation():
             break
 
         if user_input.lower() in {"quit", "exit", ""}:
-            print("Agent: Thank you for contacting Passenger support. Have a great day!")
+            print("Agent: Thanks for reaching out to Passenger. Take care!")
             break
 
-        history.append({"role": "user", "content": user_input})
+        result = graph.invoke(
+            {"messages": [HumanMessage(content=user_input)]},
+            config=config,
+        )
 
-        result = agent.invoke({"messages": history})
-        messages = result["messages"]
-
-        # Last AI message is the response
+        messages = result.get("messages", [])
         ai_message = next(
-            (m for m in reversed(messages) if m.type == "ai" and m.content),
+            (m for m in reversed(messages) if isinstance(m, AIMessage) and m.content),
             None,
         )
+
         if ai_message:
-            response = ai_message.content
-            print(f"\nAgent: {response}\n")
-            history.append({"role": "assistant", "content": response})
+            print(f"\nAgent: {ai_message.content}\n")
         else:
-            print("\nAgent: I'm sorry, I wasn't able to process that. Could you try again?\n")
+            print("\nAgent: Sorry, something went wrong — could you try again?\n")
 
 
 if __name__ == "__main__":
-    # Validate required environment variables
     required = ["OPENAI_API_KEY"]
     missing = [k for k in required if not os.getenv(k)]
     if missing:
