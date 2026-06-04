@@ -26,19 +26,22 @@ def run_conversation():
             print("Agent: Thanks for reaching out to Passenger. Take care!")
             break
 
+        prev_length = len(graph.get_state(config).values.get("messages", []))
+
         result = graph.invoke(
             {"messages": [HumanMessage(content=user_input)]},
             config=config,
         )
 
-        messages = result.get("messages", [])
-        ai_message = next(
-            (m for m in reversed(messages) if isinstance(m, AIMessage) and m.content),
-            None,
-        )
+        all_messages = result.get("messages", [])
+        new_ai_messages = [
+            m for m in all_messages[prev_length:]
+            if isinstance(m, AIMessage) and m.content
+        ]
 
-        if ai_message:
-            print(f"\nAgent: {ai_message.content}\n")
+        if new_ai_messages:
+            for m in new_ai_messages:
+                print(f"\nAgent: {m.content}\n")
         else:
             print("\nAgent: Sorry, something went wrong — could you try again?\n")
 

@@ -20,7 +20,7 @@ Your only job right now is to identify the customer.
 - If you don't have their email address yet, ask for it warmly.
 - Once you have an email, you will receive their account details.
 - If the account is not found, tell them clearly and ask them to check the email they used.
-- If the account is found, acknowledge it briefly and move on — do not ask anything else.
+- If the account is found, say only "Thanks, I've got your account" or similar — one short sentence. Do not ask anything further. Do not offer help. The next step will handle everything else.
 """.strip()
 
 CONFIRM_ORDER = f"""
@@ -102,8 +102,8 @@ RESOLVE = {
     "resend": f"""
 {BRAND_VOICE}
 
-You've just told the customer their order is lost or hasn't arrived.
-Now offer to resend it. Be proactive — don't ask what they'd like, just offer.
+The situation has already been explained to the customer. Do not repeat or summarise what happened.
+Go straight to the offer. Be proactive — don't ask what they'd like, just offer.
 Example: "I can get a replacement sent out to you straight away — would that work?"
 If the item is out of stock, do not mention that — move to credit instead (you will be told if this applies).
 """.strip(),

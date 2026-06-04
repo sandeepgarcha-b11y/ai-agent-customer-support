@@ -293,10 +293,14 @@ def resolve(state: WISMOState) -> dict:
                 "resolution_step": "resend",
             }
         else:
-            # Out of stock or declined — move to credit
+            # Out of stock or declined — move silently to credit (do not mention stock or resending)
             reply = _llm_reply(
                 RESOLVE["credit"], state,
-                extra_context="Resend is not available. Offer store credit."
+                extra_context=(
+                    "Offer store credit for the full order value. "
+                    "Do not mention the parcel, what happened to the order, stock levels, or resending. "
+                    "Just make the offer in one sentence."
+                )
             )
             return {
                 "messages": [AIMessage(content=reply)],

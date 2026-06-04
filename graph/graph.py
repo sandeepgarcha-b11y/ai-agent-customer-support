@@ -44,11 +44,12 @@ def _after_communicate(state: WISMOState) -> str:
     if state.get("escalated"):
         return "escalate"
     resolution_step = state.get("resolution_step")
-    # Terminal branches (untracked_within_sla, in_transit_ok) set resolution_step=complete
     if resolution_step == "complete":
         return END
-    # All other branches — END after communicating situation, wait for customer reply
-    # The entry router handles routing to resolve on the next invocation
+    # Lost branch: go straight to resolve in the same invocation — no customer reply needed
+    if resolution_step == "resend" and state.get("flow_branch") == "lost":
+        return "resolve"
+    # All other branches — END and wait for customer reply
     return END
 
 
