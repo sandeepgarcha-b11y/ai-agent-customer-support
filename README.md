@@ -1,74 +1,39 @@
-# Passenger Support Agent
+# AI Customer Support Agent
 
-A customer support AI agent for [Passenger](https://www.passenger-clothing.com/), built with LangGraph (ReAct architecture), OpenAI `gpt-4o`, and LangSmith tracing.
+A LangGraph-based customer support agent designed to explore how AI can automate common support workflows while maintaining a good customer experience.
 
-## Supported flows
+## Why I Built This
 
-| Flow | Status |
-|------|--------|
-| **WISMO** (order tracking) | Complete |
-| **Returns** | Placeholder |
-| **Exchanges** | Placeholder |
-| **Damaged orders** | Placeholder |
-| **Account access** | Placeholder |
+Customer support is one of the areas where AI has the greatest potential to create value.
 
-## Project structure
+Having worked on customer support automation in production, I wanted to better understand how modern AI agents handle workflows, tool use, orchestration and customer interactions.
 
-```
-cs-ai-agent/
-├── agent.py              # LangGraph ReAct agent + CLI entrypoint
-├── tools/
-│   ├── order_tools.py    # lookup_order, check_return_eligibility, initiate_return, initiate_exchange
-│   ├── product_tools.py  # check_stock
-│   └── account_tools.py  # lookup_account
-├── prompts/
-│   └── system_prompt.py  # WISMO system prompt (other flows TBD)
-├── traces/               # LangSmith trace exports (gitignored)
-├── case_study/           # Iteration logs and docs (gitignored)
-├── CLAUDE.md             # Guidance for Claude Code
-├── requirements.txt
-└── .env.example
-```
+## What It Does
 
-## Setup
+The agent can:
 
-```bash
-# 1. Clone and install dependencies
-pip install -r requirements.txt
+* Handle common customer support requests
+* Route requests to the correct workflow
+* Access tools when required
+* Maintain context across interactions
+* Escalate when human intervention is needed
 
-# 2. Configure environment variables
-cp .env.example .env
-# Edit .env and fill in your API keys
+## Example Flows
 
-# 3. Run the agent
-python agent.py
-```
+* Where is my order? (WISMO)
+* Returns and refunds
+* Account access issues
+* Order updates
 
-## Environment variables
+## Areas Explored
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `OPENAI_API_KEY` | Yes | OpenAI API key |
-| `LANGCHAIN_TRACING_V2` | No | Set to `true` to enable LangSmith tracing |
-| `LANGCHAIN_API_KEY` | No | LangSmith API key |
-| `LANGCHAIN_PROJECT` | No | LangSmith project name (default: `passenger-support-agent`) |
+* Agent orchestration
+* Tool calling
+* Prompt design
+* State management
+* Human handoff patterns
+* Customer support automation
 
-## Test personas (WISMO)
+## What I Learned
 
-All tools use hardcoded mock data. Use these email addresses to drive each scenario:
-
-| Email | Scenario |
-|-------|----------|
-| `clara.jones@example.com` | Untracked, within SLA |
-| `tom.wright@example.com` | Untracked, outside SLA |
-| `priya.mehta@example.com` | Tracked, within delivery window |
-| `ben.hayes@example.com` | Tracked, overdue, at depot |
-| `sarah.okafor@example.com` | Delivered, customer says not received |
-| `james.liu@example.com` | Genuinely lost |
-| `nina.patel@example.com` | Multiple recent orders |
-
-**Products (for exchange/stock checks):** `PROD-MERINO-JUMPER`, `PROD-LINEN-SHIRT`, `PROD-CANVAS-SHORTS`, `PROD-FLEECE-JACKET`
-
-## LangSmith tracing
-
-With `LANGCHAIN_TRACING_V2=true` set, every agent run is automatically traced to LangSmith. Export traces to the `traces/` directory for offline analysis.
+Building this project gave me a much deeper understanding of the challenges involved in deploying customer-facing AI systems, including reliability, trust, escalation and workflow design.
