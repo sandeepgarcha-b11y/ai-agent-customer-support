@@ -1,3 +1,3 @@
-from prompts.system_prompt import SYSTEM_PROMPT
+from prompts.system_prompt import get_system_prompt
 
-__all__ = ["SYSTEM_PROMPT"]
+__all__ = ["get_system_prompt"]
